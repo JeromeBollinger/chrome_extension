@@ -1,0 +1,39 @@
+{
+    "name": "Covid-19 Stats UK",
+    "version": "1.0.0",
+    "description": "latest covid data of UK",
+    "manifest_version": 3,
+    "author": "Sampurna Chapagain",
+    "permissions": [
+        "storage",
+        "tabs"
+    ],
+    "host_permissions": [
+        "https://google.com/*"
+    ],
+    "action": {
+        "default_popup": "index.html",
+        "default_title": "Latest Covid Report"
+    },
+    "content_scripts": [
+        {
+            "js": [
+                "contentscript.js"
+            ],
+            "matches": [
+                "https://mobile.twitter.com/*"
+            ]
+        }
+    ],
+    "web_accessible_resources": [
+        {
+            "resources": [
+                "/script.js",
+                "/contentscript.js"
+            ],
+            "matches": [
+                "<all_urls>"
+            ]
+        }
+    ]
+}
