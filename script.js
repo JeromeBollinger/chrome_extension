@@ -21,6 +21,7 @@ function create_assign_label(counter, links_and_buttons) {
 }
 
 function remove_label_color() {
+  console.log("remove");
   labels.forEach((label) => {
     label[0].remove();
     label[1].style.color = "";
@@ -29,14 +30,16 @@ function remove_label_color() {
 }
 
 function link_logic(event) {
-  labels.forEach((label) => {
-    if (event.key === label[0].innerHTML[0]) {
-      if (event.key === label[0].innerHTML) label[1].click();
-      label[0].innerHTML = label[0].innerHTML.substring(1);
-    } else {
-      label[0].remove();
-    }
-  });
+  if (event.key !== ".") {
+    labels.forEach((label) => {
+      if (event.key === label[0].innerHTML[0]) {
+        if (event.key === label[0].innerHTML) label[1].click();
+        label[0].innerHTML = label[0].innerHTML.substring(1);
+      } else {
+        label[0].remove();
+      }
+    });
+  }
 }
 
 function includes_href(href, a) {
@@ -62,21 +65,29 @@ function handle_link_navigation(event) {
         }
       });
       links_and_buttons.forEach((a) => {
+        counter++;
         var label = document.createElement("label");
         label.innerHTML = get_character(counter, links_and_buttons.length);
         label.classList.add("link_label");
-        console.log(a);
-        console.log(label);
         a.parentNode.insertBefore(label, a.nextSibling);
         assign_color(label, a);
         labels.push([label, a]);
-        counter++;
       });
-    } else {
-      remove_label_color();
     }
   }
 }
+
+// aas.forEach((a) => {
+//   counter++;
+//   var label = document.createElement("label");
+//   var chars = get_character(counter, aas.length);
+//   label.innerHTML = chars;
+//   label.classList.add("link_label");
+//   a.parentNode.insertBefore(label, a.nextSibling);
+//   var pair = [label, a.href];
+//   labels.push(pair);
+// });
+// console.log(labels);
 
 function add_listener() {
   document.addEventListener("keydown", function (event) {
@@ -171,23 +182,22 @@ function cursor_occupied() {
   });
   return occupied;
 }
-
 function handle_navigation_event(event) {
   if (!cursor_occupied() && !in_link_mode && !event.ctrlKey) {
     if (event.key === "n") {
-      window.scrollBy(0, 200);
+      window.scrollBy({ top: 200, left: 0, behavior: "instant" });
       event.preventDefault();
     }
     if (event.key === "p") {
-      window.scrollBy(0, -200);
+      window.scrollBy({ top: -200, left: 0, behavior: "instant" });
       event.preventDefault();
     }
     if (event.key === "f") {
-      window.scrollBy(200, 0);
+      window.history.forward(1);
       event.preventDefault();
     }
     if (event.key === "b") {
-      window.scrollBy(-200, 0);
+      window.history.back(1);
       event.preventDefault();
     }
   }
