@@ -1,7 +1,7 @@
 {
     "name": "Keyboard Navigation",
     "version": "1.0.0",
-    "description": "Browsing only with keyboard",
+    "description": "Allows you to brows only with your keyboard. Press '.' and required chars to jump to link. Press 'n' or 'p' to scroll down or up.",
     "manifest_version": 3,
     "author": "Jerome Bollinger",
     "background": {
@@ -13,6 +13,11 @@
     "permissions": [
         "scripting"
     ],
+    "icons": {
+        "16": "icon.png",
+        "32": "icon.png",
+        "64": "icon.png"
+    },
     "content_scripts": [
         {
             "matches": [
