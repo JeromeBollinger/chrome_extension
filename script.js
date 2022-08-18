@@ -49,6 +49,15 @@ function includes_href(href, a) {
   return false;
 }
 
+chrome.storage.onChanged.addListener(function () {
+  chrome.storage.sync.get(["color", "font"], function (items) {
+    labels.forEach((label) => {
+      label[0].style.backgroundColor = items["color"];
+      label[0].style.color = items["font"];
+    });
+  });
+});
+
 function handle_link_navigation(event) {
   if (cursor_occupied()) return;
 
@@ -64,6 +73,7 @@ function handle_link_navigation(event) {
             links_and_buttons.push(a);
         }
       });
+
       links_and_buttons.forEach((a) => {
         counter++;
         var label = document.createElement("label");
@@ -72,6 +82,10 @@ function handle_link_navigation(event) {
         a.parentNode.insertBefore(label, a.nextSibling);
         assign_color(label, a);
         labels.push([label, a]);
+        chrome.storage.sync.get(["color", "font"], function (items) {
+          label.style.backgroundColor = items["color"];
+          label.style.color = items["font"];
+        });
       });
     }
   }
