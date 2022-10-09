@@ -1,6 +1,31 @@
 var in_link_mode = false;
 var labels = new Array();
 
+// chrome.storage variables
+var on;
+var color;
+var font;
+chrome.storage.sync.get(["on"], function (items) {
+  if(items["on"] == 1 || items["on"] == 0){
+    on = items["on"];
+  }
+  else{
+    on = 1;
+  }
+});
+
+// initialize chrome storage
+//chrome.storage.sync.set({ on: true }, function () {});
+chrome.storage.onChanged.addListener(function () {
+  chrome.storage.sync.get(["color", "font", "on"], function (items) {
+    on = items["on"];
+    color = items["color"];
+    font = items["font"];
+    console.log("item changed on: "+ on);
+  })
+});
+
+
 function assign_color(label, a) {
   if (a.href == undefined || a.href == "") substring = "0";
   else var substring = a.href.substring(40);
@@ -60,6 +85,7 @@ chrome.storage.onChanged.addListener(function () {
 
 function handle_link_navigation(event) {
   if (cursor_occupied()) return;
+  if (!in_link_mode && !on) return;
 
   if (event.key === ".") {
     in_link_mode = !in_link_mode;
@@ -197,7 +223,8 @@ function cursor_occupied() {
   return occupied;
 }
 function handle_navigation_event(event) {
-  if (!cursor_occupied() && !in_link_mode && !event.ctrlKey) {
+  if (!cursor_occupied() && !in_link_mode && !event.ctrlKey && (on == 1)) {
+    console.log(on);
     if (event.key === "n") {
       window.scrollBy({ top: 200, left: 0, behavior: "instant" });
       event.preventDefault();
