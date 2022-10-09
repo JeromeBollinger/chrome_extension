@@ -1,3 +1,13 @@
   input {
     text-align: center;
   }
+
+  .on_button{
+    width: 30px;
+    background-color: greenyellow;
+  }
+
+  .off_button{
+    width: 30px;
+    background-color: rgb(255, 47, 47);
+  }
