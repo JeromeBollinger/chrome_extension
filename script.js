@@ -129,10 +129,24 @@ function handle_link_navigation(event) {
 // });
 // console.log(labels);
 
+function toggle_on_off(event){
+    // toggle on off by pressing ";"
+    if (event.key === ";") {
+        if(on == 0){
+            chrome.storage.sync.set({ on: 1 }, function () {});
+        }
+        else if(on == 1){
+            chrome.storage.sync.set({ on: 0 }, function () {});chrome.storage.sync.set({ on: 0 }, function () {});
+        }
+    }
+    console.log(on);
+}
+
 function add_listener() {
   document.addEventListener("keydown", function (event) {
     handle_navigation_event(event);
     handle_link_navigation(event);
+      toggle_on_off(event);
     if (in_link_mode) {
       link_logic(event);
     } else {
